@@ -2,6 +2,10 @@ package net.ivanvega.miholamundob;
 
 import static java.net.Proxy.Type.HTTP;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -15,8 +19,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnMT;
+    Button btnMT, btnActForResul;
     EditText txtMT;
+    ActivityResultLauncher<Intent> launcherActivity;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,30 @@ public class MainActivity extends AppCompatActivity {
 
         txtMT = findViewById(R.id.txt1);
         btnMT = findViewById(R.id.btn1);
+        btnActForResul = findViewById(R.id.btnAR);
+        btnActForResul.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this,
+                    SecondActivity.class);
+            launcherActivity.launch(intent);
+        });
+
+        launcherActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode()==RESULT_OK) {
+                            Intent intent =
+                                    result.getData();
+                            Toast.makeText(getApplicationContext(),
+                                    intent.getStringExtra("token"),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                }
+        );
+
 
         btnMT.setOnClickListener(new View.OnClickListener() {
             @Override

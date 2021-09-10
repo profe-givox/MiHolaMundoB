@@ -3,6 +3,7 @@ package net.ivanvega.miholamundob;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SecondActivity extends AppCompatActivity {
 
     EditText txtU;
+    Button btnEnter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +27,16 @@ public class SecondActivity extends AppCompatActivity {
                 intentPara.getStringExtra("nombre");
 
         txtU.setText(parnom);
+
+        btnEnter = findViewById(R.id.btnEntrar);
+        btnEnter.setOnClickListener(view -> {
+            Intent intent= new Intent();
+            intent.putExtra("token", "0x23kjhlksdf8o7w234llkjhsid");
+            setResult(RESULT_OK, intent);
+            finish();
+
+        });
+
     }
 
 }
