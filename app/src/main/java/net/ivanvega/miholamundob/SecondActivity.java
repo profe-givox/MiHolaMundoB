@@ -32,6 +32,15 @@ public class SecondActivity extends AppCompatActivity {
         btnEnter.setOnClickListener(view -> {
             Intent intent= new Intent();
             intent.putExtra("token", "0x23kjhlksdf8o7w234llkjhsid");
+
+            /*
+            Usuario u = new Usuario();
+            u.setNombre(txtU.getText().toString());
+            u.email(txtE.getText());
+            ...
+            intent.putExtra("user", u);
+*/
+
             setResult(RESULT_OK, intent);
             finish();
 

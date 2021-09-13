@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnMT, btnActForResul;
     EditText txtMT;
     ActivityResultLauncher<Intent> launcherActivity;
-
+    private ActivityResultLauncher<String> launcher;
 
 
     @Override
@@ -34,10 +34,25 @@ public class MainActivity extends AppCompatActivity {
         btnMT = findViewById(R.id.btn1);
         btnActForResul = findViewById(R.id.btnAR);
         btnActForResul.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this,
-                    SecondActivity.class);
-            launcherActivity.launch(intent);
+
+//            Intent intent = new Intent(MainActivity.this,
+//                    SecondActivity.class);
+//            launcherActivity.launch(intent);
+
+            launcher.launch("image/*");
+
         });
+
+
+         launcher = registerForActivityResult( new ActivityResultContracts.GetContent(),
+                result -> {
+
+             Toast.makeText(getApplicationContext(),
+                        result.toString(),
+                        Toast.LENGTH_LONG).show();
+
+        });
+
 
         launcherActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -47,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                         if (result.getResultCode()==RESULT_OK) {
                             Intent intent =
                                     result.getData();
+
+                            intent.getParcelableArrayExtra("user" );
+
                             Toast.makeText(getApplicationContext(),
                                     intent.getStringExtra("token"),
                                     Toast.LENGTH_LONG)
